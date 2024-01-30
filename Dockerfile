@@ -45,11 +45,11 @@ FROM openjdk:17-slim-bullseye
 
 WORKDIR /store
 
-# Copia el archivo JAR construido desde la etapa de construcción de Java
-COPY --from=build-java /store/target/store-0.0.1.jar store.jar
-
 # Copia los archivos de Tailwind CSS desde la etapa de construcción de Tailwind CSS
 COPY --from=build-tailwind /store/output.css src/main/resources/static/css/
+
+# Copia el archivo JAR construido desde la etapa de construcción de Java
+COPY --from=build-java /store/target/store-0.0.1.jar store.jar
 
 # Expone el puerto que utilizará la aplicación
 EXPOSE 8080
