@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link rel="stylesheet" href="output.css">
+   <link rel="stylesheet" th:href="@{/css/output.css}">
     <title>Home Page</title>
 </head>
 <body class="bg-zinc-900">
-    <h1 class="text-3xl text-sky-400">Coming soon...</h1>
+    <h1 class="text-3xl text-sky-400  border p-3 rounded-md text-center" title="coming soon">Coming soon ...</h1>
 </body>
 </html>
