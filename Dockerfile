@@ -58,4 +58,4 @@ EXPOSE 8080
 ENV JAVA_OPTS=""
 
 # Comando para ejecutar la aplicación Spring Boot
-CMD ["java", "$JAVA_OPTS", "-XshowSettings:vm", "-Dinstrument=false", "-Dspring.profiles.active=$PROFILE", "-jar", "store.jar"]
+CMD ["sh", "-c", "exec java $JAVA_OPTS -XshowSettings:vm -Dinstrument=false -Dspring.profiles.active=$PROFILE -jar store.jar"]
