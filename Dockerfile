@@ -16,7 +16,29 @@ RUN npx tailwindcss build -i ./input.css -o ./output.css
 # Etapa de construcción de la aplicación Java
 FROM maven:3.8.4-openjdk-17 AS build-java
 
-# ... (resto de la construcción de Java)
+# Argumento para decidir si eliminar imágenes antiguas
+ARG DELETE_OLD_IMAGES=true
+
+# Elimina las imágenes antiguas si DELETE_OLD_IMAGES=true
+RUN if [ "$DELETE_OLD_IMAGES" = "true" ]; then \
+    docker rmi $(docker images -q) || true; \
+fi
+
+# Establece un directorio de trabajo
+WORKDIR /store
+
+# Copia solo el archivo POM y los archivos de configuración de Maven
+COPY pom.xml .
+
+# Crea el directorio src y copia solo el archivo application.properties
+RUN mkdir -p src/main/resources
+COPY src/main/resources/application.properties src/main/resources/
+
+# Copia el resto de los archivos del proyecto
+COPY src src
+
+# Compila y empaqueta el proyecto
+RUN mvn clean package -DskipTests
 
 # Etapa de producción
 FROM openjdk:17-slim-bullseye
