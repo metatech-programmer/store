@@ -11,7 +11,7 @@ RUN npm install
 
 # Copia los archivos de Tailwind CSS y compila los estilos
 COPY src/main/resources/static/css/ .
-RUN npx tailwindcss build -i ./css/input.css -o ./css/output.css
+RUN npx tailwindcss build -i ./input.css -o ./output.css
 
 # Etapa de construcción de la aplicación Java
 FROM maven:3.8.4-openjdk-17 AS build-java
