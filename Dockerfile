@@ -4,7 +4,7 @@ FROM node:14 AS build-tailwind
 WORKDIR /store
 
 # Copia solo los archivos necesarios para instalar las dependencias
-COPY src/main/resources/static/package.json src/main/resources/static/package-lock.json ./
+COPY /package.json /package-lock.json ./
 
 # Instala las dependencias de Node.js
 RUN npm install
