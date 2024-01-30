@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "concurrently \"npm run tailwindcss\" \"npm run spring\"",
-    "tailwindcss": "npx tailwindcss -i ./src/main/resources/static/input.css -o ./src/main/resources/static/output.css --watch",
+    "tailwindcss": "npx tailwindcss -i ./src/main/resources/static/css/input.css -o ./src/main/resources/static/css/output.css --watch",
     "spring": "mvnw.cmd spring-boot:run"
   },
   "keywords": [],

@@ -10,8 +10,8 @@ COPY /package.json /package-lock.json ./
 RUN npm install
 
 # Copia los archivos de Tailwind CSS y compila los estilos
-COPY src/main/resources/static/ .
-RUN npx tailwindcss build -i ./input.css -o ./output.css
+COPY src/main/resources/static/css/ .
+RUN npx tailwindcss build -i ./css/input.css -o ./css/output.css
 
 # Etapa de construcción de la aplicación Java
 FROM maven:3.8.4-openjdk-17 AS build-java
@@ -50,7 +50,7 @@ WORKDIR /store
 COPY --from=build-java /store/target/store-0.0.1.jar store.jar
 
 # Copia los archivos de Tailwind CSS desde la etapa de construcción de Tailwind CSS
-COPY --from=build-tailwind /store/output.css src/main/resources/static/
+COPY --from=build-tailwind /store/css/output.css src/main/resources/static/css/
 
 # Expone el puerto que utilizará la aplicación
 EXPOSE 8080
