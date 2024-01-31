@@ -564,8 +564,69 @@ video {
   height: 100vh;
 }
 
+.h-\[298px\] {
+  height: 298px;
+}
+
+.h-\[198px\] {
+  height: 198px;
+}
+
+.h-\[398px\] {
+  height: 398px;
+}
+
 .w-full {
   width: 100%;
+}
+
+.w-\[\] {
+  width: ;
+}
+
+.w-\[142\%\] {
+  width: 142%;
+}
+
+.w-\[172\%\] {
+  width: 172%;
+}
+
+.w-\[182\%\] {
+  width: 182%;
+}
+
+.w-\[212\%\] {
+  width: 212%;
+}
+
+.w-\[232\%\] {
+  width: 232%;
+}
+
+.w-\[2\%\] {
+  width: 2%;
+}
+
+.w-\[12\%\] {
+  width: 12%;
+}
+
+.w-\[162\%\] {
+  width: 162%;
+}
+
+.w-\[202\%\] {
+  width: 202%;
+}
+
+.w-\[152\%\] {
+  width: 152%;
+}
+
+.-scale-x-100 {
+  --tw-scale-x: -1;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
 @keyframes pulse {
@@ -594,6 +655,14 @@ video {
   gap: 0.75rem;
 }
 
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
 .rounded-lg {
   border-radius: 0.5rem;
 }
@@ -619,6 +688,10 @@ video {
 
 .p-3 {
   padding: 0.75rem;
+}
+
+.text-center {
+  text-align: center;
 }
 
 .text-3xl {
@@ -676,4 +749,14 @@ video {
   --tw-scale-x: 1.1;
   --tw-scale-y: 1.1;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+@media (min-width: 768px) {
+  .md\:h-\[298px\] {
+    height: 298px;
+  }
+
+  .md\:w-\[142\%\] {
+    width: 142%;
+  }
 }

@@ -19,10 +19,10 @@ public class ErrorsController implements ErrorController {
 
         // Redirigir a la página de error correspondiente
         if (statusCode == HttpStatus.NOT_FOUND.value()) {
-            return "/error404";
+            return "/errors/error404";
         }
         if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
-            return "/error500";
+            return "/errors/error500";
         }
         return "error";
     }

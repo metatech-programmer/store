@@ -49,7 +49,7 @@ public class securityConfiguration {
                                                 .clearAuthentication(true)
                                                 .permitAll())
                                 .exceptionHandling(exeptions -> exeptions
-                                                .accessDeniedPage("/error404"));
+                                                .accessDeniedPage("/errors/error404"));
                 return http.build();
         }
 }
