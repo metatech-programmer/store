@@ -12,17 +12,16 @@
   </head>
   <body class="bg-red-400">
     <div
-      class="w-full h-screen flex items-center justify-center flex-col gap-3 text-zinc-100"
+      class="w-full h-screen flex items-center justify-center flex-col gap-3 text-zinc-100 z-10"
     >
       <a
-        th:href="@{/login}"
         class="hover:text-red-600 border-2 p-3 text-lg border-red-400 bg-red-300 rounded-lg hover:ring-2 hover:ring-purple-400 hover:bg-red-400 hover:scale-105 active:scale-110"
         th:href="@{/}"
-        >Inicia sesion</a
+        >Go back</a
       >
     </div>
 
-    <div class="absolute top-0 end-0 overflow-hidden">
+    <div class="absolute top-0 end-0 overflow-hidden -z-10">
       <svg
         class="w-[152%] h-[198px] md:w-[142%] md:h-[298px]"
         preserveAspectRatio="none"
