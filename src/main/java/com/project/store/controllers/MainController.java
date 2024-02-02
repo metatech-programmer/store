@@ -9,6 +9,10 @@ public class MainController {
     public String index() {
         return "index";
     }
-    
+
+    @GetMapping("/home")
+    public String home() {
+        return "/pages/main";
+    }
     
 }

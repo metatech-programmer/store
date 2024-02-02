@@ -8,16 +8,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" th:href="@{/css/output.css}" />
-    <title>Login</title>
+    <title>Error 500</title>
   </head>
   <body class="bg-red-400">
     <div
       class="w-full h-screen flex items-center justify-center flex-col gap-3 text-zinc-100 z-10"
     >
-      <a
+      <buttton
         class="hover:text-red-600 border-2 p-3 text-lg border-red-400 bg-red-300 rounded-lg hover:ring-2 hover:ring-purple-400 hover:bg-red-400 hover:scale-105 active:scale-110"
-        th:href="@{/}"
-        >Go back</a
+        onclick="history.back()"
+        >Go back</buttton
       >
     </div>
 

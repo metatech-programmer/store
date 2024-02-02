@@ -1,6 +1,5 @@
 package com.project.store.security;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,39 +16,42 @@ import com.project.store.handler.LoginSuccessHandler;
 @EnableWebSecurity
 public class securityConfiguration {
 
-        @Autowired
-        private UserDetailsService userDetailsService;
+    @Autowired
+    private UserDetailsService userDetailsService;
 
-        BCryptPasswordEncoder passwordEncoder() {
-                return new BCryptPasswordEncoder();
-        }
+    BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-        @Autowired
-        public void configurerGlobal(AuthenticationManagerBuilder build) throws Exception {
-                build.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-        }
+    @Autowired
+    public void configurerGlobal(AuthenticationManagerBuilder build) throws Exception {
+        build.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+    }
 
-        @Bean
-        SecurityFilterChain configure(HttpSecurity http) throws Exception {
-                http
-                                .authorizeHttpRequests(authorize -> authorize
-                                                .requestMatchers("/pages/inventary", "/pages/soldProducts","register")
-                                                .hasRole("ADMIN")
-                                                .anyRequest()
-                                                .permitAll())
-                                .formLogin(form -> form
-                                                .loginPage("/login")
-                                                .defaultSuccessUrl("/")
-                                                .failureUrl("/login?error")
-                                                .successHandler(new LoginSuccessHandler())
-                                                .permitAll())
-                                .logout(logout -> logout
-                                                .logoutSuccessUrl("/")
-                                                .invalidateHttpSession(true)
-                                                .clearAuthentication(true)
-                                                .permitAll())
-                                .exceptionHandling(exeptions -> exeptions
-                                                .accessDeniedPage("/errors/error404"));
-                return http.build();
-        }
+    @Bean
+    SecurityFilterChain configure(HttpSecurity http) throws Exception {
+        http
+                .authorizeHttpRequests(authorize -> authorize
+                .requestMatchers("/pages/inventary/**", "/pages/soldProducts/**", "register/**")
+                .hasRole("ADMIN")
+                .requestMatchers("/pages/addInventary/**","statics/**", "/pages/main/**")
+                .hasAnyRole("VENDEDOR","ADMIN")
+                .anyRequest()
+                .permitAll())
+                .formLogin(form -> form
+                .loginPage("/login")
+                .defaultSuccessUrl("/home")
+                .successForwardUrl("/home")
+                .failureUrl("/login?error")
+                .successHandler(new LoginSuccessHandler())
+                .permitAll())
+                .logout(logout -> logout
+                .logoutSuccessUrl("/")
+                .invalidateHttpSession(true)
+                .clearAuthentication(true)
+                .permitAll())
+                .exceptionHandling(exeptions -> exeptions
+                .accessDeniedPage("/errors/error404"));
+        return http.build();
+    }
 }
