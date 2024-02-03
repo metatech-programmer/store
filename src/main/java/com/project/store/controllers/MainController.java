@@ -33,7 +33,7 @@ public class MainController {
             model.addAttribute("productos", allProducts);
         }
 
-        return "/pages/main";
+        return "pages/main";
     }
 
     @GetMapping("/search")
@@ -55,7 +55,7 @@ public class MainController {
             model.addAttribute("productos", products);
         }
 
-        return "/pages/main";
+        return "pages/main";
     }
 
       @GetMapping("/buscar")
