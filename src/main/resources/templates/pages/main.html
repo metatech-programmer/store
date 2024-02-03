@@ -41,11 +41,11 @@
           name="productos"
           id="productos"
           th:if="${productos}"
-          th:each="productos : ${productos}"
+          
         >
           <option th:if="${producto}" th:text="${producto}"></option>
           <option th:if="${opcion}" th:text="${opcion}"></option>
-          <option
+          <option th:each="productos : ${productos}"
             th:text="${productos.nombreProducto}"
             th:value="${productos.idProducto}"
           ></option>
@@ -55,10 +55,6 @@
           th:if="${producto}"
           >[[${producto}]]</span
         >
-      </div>
-
-      <div id="resultados">
-        <!-- Aquí se mostrarán los resultados de la búsqueda sin recargar la página -->
       </div>
     </div>
     <script>
