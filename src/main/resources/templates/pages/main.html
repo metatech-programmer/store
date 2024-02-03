@@ -21,6 +21,7 @@
         <input
           type="search"
           name="search"
+          id="searchInput" oninput="buscarProductos()"
           placeholder="Introduzca el nombre de un producto"
           class="p-2 rounded-lg mt-3 border-2 border-zinc-100 bg-zinc-200/80 outline-zinc-700 text-zinc-500 font-semibold"
         />
@@ -32,20 +33,69 @@
         </button>
       </form>
       <div class="mt-3">
-        <label for="productos" class="text-zinc-100 font-semibold" >Productos</label>
+        <label for="producto" class="text-zinc-100 font-semibold block"
+          >Productos</label
+        >
         <select
+          class="p-2 rounded-lg mt-3 border-2 border-zinc-100 bg-zinc-200/80 outline-teal-700 text-zinc-500 font-semibold"
           name="productos"
           id="productos"
-         th:each="productos : ${productos}"
+          th:if="${productos}"
+          th:each="productos : ${productos}"
         >
-          <option>Seleccione una opción</option>
+          <option th:if="${producto}" th:text="${producto}"></option>
+          <option th:if="${opcion}" th:text="${opcion}"></option>
           <option
             th:text="${productos.nombreProducto}"
             th:value="${productos.idProducto}"
           ></option>
         </select>
+        <span
+          class="text-rose-700 border-t-2 border-red-500 font-semibold"
+          th:if="${producto}"
+          >[[${producto}]]</span
+        >
       </div>
 
+      <div id="resultados">
+        <!-- Aquí se mostrarán los resultados de la búsqueda sin recargar la página -->
+      </div>
     </div>
+    <script>
+      function buscarProductos() {
+        var keyword = document.getElementById("searchInput").value;
+
+        // Realizar solicitud AJAX
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "/buscar?keyword=" + keyword, true);
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            // Actualizar la interfaz de usuario con los resultados
+            var resultadosDiv = document.getElementById("productos");
+            resultadosDiv.innerHTML = generarHTMLResultados(
+              JSON.parse(xhr.responseText)
+            );
+          }
+        };
+        xhr.send();
+      }
+
+      function generarHTMLResultados(resultados) {
+        // Generar HTML para mostrar los resultados
+        var html =
+          resultados.length == 0
+            ? "<option value='null'>No se encontraron resultados</option>"
+            : "";
+        resultados.forEach(function (producto) {
+          html +=
+            "<option value='" +
+            producto.idProducto +
+            "'>" +
+            producto.nombreProducto +
+            "</option>";
+        });
+        return html;
+      }
+    </script>
   </body>
 </html>

@@ -601,6 +601,10 @@ video {
   margin-top: 1.25rem;
 }
 
+.block {
+  display: block;
+}
+
 .inline-block {
   display: inline-block;
 }
@@ -941,6 +945,11 @@ video {
   color: rgb(239 68 68 / var(--tw-text-opacity));
 }
 
+.text-rose-700 {
+  --tw-text-opacity: 1;
+  color: rgb(190 18 60 / var(--tw-text-opacity));
+}
+
 .text-transparent {
   color: transparent;
 }
@@ -999,6 +1008,10 @@ video {
 
 .outline-purple-700 {
   outline-color: #7e22ce;
+}
+
+.outline-teal-700 {
+  outline-color: #0f766e;
 }
 
 .outline-zinc-700 {

@@ -10,8 +10,8 @@ import com.project.store.entities.ProductoEntity;
 import jakarta.transaction.Transactional;
 
 public interface ProductoDao extends CrudRepository<ProductoEntity, Long> {
-    
+
     @Transactional
-    @Query("SELECT pr FROM ProductoEntity pr WHERE pr.nombreProducto = %?1%")
+    @Query("SELECT pr FROM ProductoEntity pr WHERE pr.nombreProducto LIKE %?1%")
     public List<ProductoEntity> findByNombreProducto(String producto);
 }
