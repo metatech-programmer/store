@@ -20,7 +20,7 @@ public class MainController {
 
     @GetMapping("/")
     public String index() {
-        return "index.html";
+        return "index";
     }
 
     @GetMapping("/home")
@@ -33,7 +33,7 @@ public class MainController {
             model.addAttribute("productos", allProducts);
         }
 
-        return "/pages/main.html";
+        return "/pages/main";
     }
 
     @GetMapping("/search")
@@ -55,7 +55,7 @@ public class MainController {
             model.addAttribute("productos", products);
         }
 
-        return "/pages/main.html";
+        return "/pages/main";
     }
 
       @GetMapping("/buscar")

@@ -22,7 +22,7 @@ if (logout != null) {
     model.addAttribute("success", "Ha cerrado sesión correctamente");
 }
 
-        return "login.html";
+        return "login";
     }
 
     
