@@ -32,16 +32,16 @@ public class securityConfiguration {
     SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/pages/inventary/**", "/pages/soldProducts/**", "register/**")
+                .requestMatchers("/pages/inventary", "/pages/soldProducts", "register", "/pages/inventary/**", "/pages/soldProducts/**", "register/**")
                 .hasRole("ADMIN")
-                .requestMatchers("/pages/addInventary/**","statics/**", "/pages/main/**")
-                .hasAnyRole("VENDEDOR","ADMIN")
+                .requestMatchers("/pages/addInventary", "statics", "/home", "/pages/addInventary/**", "statics/**", "/home/**")
+                .hasAnyRole("VENDEDOR", "ADMIN")
                 .anyRequest()
                 .permitAll())
                 .formLogin(form -> form
                 .loginPage("/login")
-                .defaultSuccessUrl("/home")
                 .successForwardUrl("/home")
+                .defaultSuccessUrl("/home")
                 .failureUrl("/login?error")
                 .successHandler(new LoginSuccessHandler())
                 .permitAll())

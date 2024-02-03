@@ -16,4 +16,6 @@ public interface IProductoService {
 
     public ProductoEntity actualizaProductoEntity(ProductoEntity producto);
 
+    public List<ProductoEntity> findByNombreProducto(String nombre);
+
 }

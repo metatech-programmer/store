@@ -47,4 +47,10 @@ public class ProductoServiceImplement implements IProductoService {
         return productoDao.save(producto);
     }
 
+    @Override
+    @Transactional
+    public List<ProductoEntity> findByNombreProducto(String nombre) {
+        return (List<ProductoEntity>) productoDao.findByNombreProducto(nombre);
+    }
+
 }
