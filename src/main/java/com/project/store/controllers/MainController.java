@@ -37,31 +37,20 @@ public class MainController {
     }
 
     @GetMapping("/search")
-    public String search(Model model, @RequestParam(name = "search", required = false) String search) {
-        List<ProductoEntity> products = !productoService.findByNombreProducto(search).isEmpty() ? productoService.findByNombreProducto(search) : null;
+    public ResponseEntity<List<ProductoEntity>> search(Model model, @RequestParam(name = "search", required = false) String search) {
 
-        List<ProductoEntity> allProducts = !productoService.findAll().isEmpty() ? productoService.findAll() : null;
+        List<ProductoEntity> products = productoService.findByNombreProducto(search);
 
-        if (products == null && allProducts == null) {
-            model.addAttribute("producto", "No hay productos en el inventario");
-        }
+        return ResponseEntity.ok(products);
 
-        if (allProducts != null && products == null) {
-            model.addAttribute("opcion", "No existe el producto");
-            model.addAttribute("productos", allProducts);
-        }
-        if (allProducts != null && products != null) {
-
-            model.addAttribute("productos", products);
-        }
-
-        return "pages/main";
     }
 
-      @GetMapping("/buscar")
-    public ResponseEntity<List<ProductoEntity>> buscarProductosPorNombre(@RequestParam String keyword) {
-        List<ProductoEntity> resultados = productoService.findByNombreProducto(keyword);
-        return ResponseEntity.ok(resultados);
-    }
+    @GetMapping("/products")
+    public ResponseEntity<List<ProductoEntity>> allProducts() {
 
+        List<ProductoEntity> allProducts = productoService.findAll();
+
+        return ResponseEntity.ok(allProducts);
+
+    }
 }
