@@ -11,16 +11,17 @@
     <link rel="stylesheet" th:href="@{/css/output.css}" />
     <title>Home</title>
   </head>
-  <body class="bg-teal-400 relative text-zinc-900">
+  <body class="bg-blue-900 relative text-zinc-900">
     <div th:replace="~{layout/layout :: logout}"></div>
     <nav th:replace="~{layout/layout :: navigation}"></nav>
+    <hr class="w-4/5 opacity-40 rounded-lg m-auto my-5" />
     <div
-      class="w-full h-max md:flex justify-start items-start py-6 px-8 flex-row gap-3 text-zinc-300 bg-teal-800 rounded-b-lg"
+      class="w-full h-max md:flex justify-start items-start py-6 px-8 flex-row gap-3 text-zinc-300 bg-blue-900 rounded-b-lg"
     >
       <span class="text-xl font-bold text-center text-balance mt-5"
         >Busca el producto:</span
       >
-      <form action="#" method="get" class="w-[40%] mb-2 md:mb-0 md:w-1/5">
+      <form action="#" method="get" class="w-[80%] mb-2 md:mb-0 md:w-1/5">
         <input
           onkeydown="return handleKeyPress(event)"
           type="search"
@@ -28,35 +29,21 @@
           id="searchInput"
           oninput="buscarProducto()"
           placeholder="Introduzca el nombre de un producto"
-          class="p-2 rounded-lg mt-3 border-2 border-zinc-100 bg-zinc-200/80 outline-teal-500 text-zinc-500 font-semibold w-11/12 md:w-full"
+          class="p-2 rounded-lg mt-3 border-2 border-zinc-100 bg-zinc-200/80 outline-sky-500 text-zinc-500 font-semibold w-11/12 md:w-full"
           onsubmit="return false;"
         />
       </form>
       <hr />
       <form
         action="#"
-        method="get"
-        class="w-auto md:w-[60%] flex justify-center items-start gap-3"
+        method="post"
+        class="w-full md:w-[60%] flex justify-center flex-col md:flex-row items-start gap-3"
       >
         <select
-          class="p-2 rounded-lg mt-3 border-2 border-zinc-100 bg-zinc-200/80 outline-teal-700 text-zinc-500 font-semibold w-1/2 md:w-3/4 h-min md:hidden block"
+          class="p-2 rounded-lg mt-3 border-2 border-zinc-100 bg-zinc-200/80 outline-sky-700 text-zinc-500 font-semibold w-full md:w-3/4 h-max"
+          size="2"
           name="productos"
           id="productos"
-        >
-          <option th:if="${producto}" th:text="${producto}"></option>
-          <option th:if="${opcion}" th:text="${opcion}"></option>
-          <option
-            th:if="${productos}"
-            th:each="producto : ${productos}"
-            th:value="${producto.idProducto}"
-            th:text="${producto.nombreProducto + ' - ' + producto.precioProducto}"
-          ></option>
-        </select>
-        <select
-          class="p-2 rounded-lg mt-3 border-2 border-zinc-100 bg-zinc-200/80 outline-teal-700 text-zinc-500 font-semibold w-1/2 md:w-3/4 h-max md:block hidden"
-          size="2"
-          name="productosDos"
-          id="productosDos"
         >
           <option
             th:if="${producto}"
@@ -76,9 +63,26 @@
             class="w-full p-2 rounded-lg hover:bg-zinc-500 hover:text-zinc-200"
           ></option>
         </select>
+        <div
+          class="text-center w-full flex md:flex-col justify-start md:justify-normal items-center gap-3 md:w-1/2"
+        >
+          <input
+            type="number"
+            name="producto"
+            id="cantProducto"
+            class="p-2 rounded-lg mt-3 border-2 border-zinc-100 bg-zinc-200/80 outline-sky-700 text-zinc-500 font-semibold w-2/12 md:w-3/4 h-max text-center"
+            min="1"
+            value="1"
+          />
+          <label
+            for="cantProducto"
+            class="underline underline-offset-4 font-bold"
+            >Cantidad producto</label
+          >
+        </div>
 
         <button
-          class="p-2 rounded-lg mt-3 border-2 border-zinc-100 bg-zinc-200/80 outline-zinc-700 text-zinc-500 font-semibold h-max hover:bg-zinc-500 hover:text-zinc-200 hover:scale-105 hover:border-zinc-100/30 transition-all"
+          class="p-2 rounded-lg mt-3 border-2 h-max font-semibold hover:bg-teal-500 bg-teal-400/50 active:bg-teal-600 transition-all overflow-hidden w-full md:w-1/3"
           onclick="AddProduct()"
           type="button"
         >
@@ -86,26 +90,51 @@
         </button>
       </form>
     </div>
-    <div class="flex flex-row w-screen justify-evenly p-4 h-max">
+    <div
+      class="flex flex-row w-full justify-evenly p-4 h-96 overflow-hidden text-zinc-200 font-semibold"
+    >
       <div
         id="venta"
-        class="bg-teal-600 h-auto w-1/2 md:w-full p-3 flex flex-col gap-3 rounded-l-lg"
+        class="bg-sky-700 h-auto w-1/2 md:w-full p-3 flex flex-col gap-3 rounded-l-lg overflow-y-scroll border-2 shadow-md shadow-sky-200"
       >
-        <span
+        <div
+          class="flex w-full justify-center p-3 border rounded-lg"
           th:each="producto : ${productos}"
-          th:value="${producto.idProducto}"
-          th:text="${producto.nombreProducto + ' - ' + producto.precioProducto}"
-        ></span>
+        >
+          <span
+            th:value="${producto.idProducto}"
+            th:text="${producto.nombreProducto + ' - ' + producto.precioProducto}"
+          ></span>
+        </div>
       </div>
       <div
         id="venta"
-        class="bg-teal-700 h-auto w-full p-3 flex flex-col gap-3 rounded-r-lg"
+        class="bg-sky-700 h-auto w-full p-3 flex flex-col gap-3 rounded-r-lg border-2 shadow-md shadow-sky-200"
       >
-        <span
-          th:each="producto : ${productos}"
-          th:value="${producto.idProducto}"
-          th:text="${producto.nombreProducto + ' - ' + producto.precioProducto}"
-        ></span>
+        <form
+          action="#"
+          method="post"
+          class="w-full h-full flex flex-col justify-center items-start"
+        >
+          <label
+            for="totalVenta"
+            class="text-left underline underline-offset-2 font-semibold m-3"
+            >Total de la venta:</label
+          >
+          <input
+            type="number"
+            name="totalVenta"
+            id="totalVenta"
+            class="w-full h-3/4 border p-2 rounded-lg text-center text-orange-400 font-bold text-7xl"
+            value="34332"
+            readonly
+          />
+          <input
+            type="submit"
+            value="Vender"
+            class="w-full border p-2 rounded-lg mt-3 hover:bg-teal-400 bg-teal-400/50 hover:font-bold active:bg-teal-600 hover:border-none hover:ring-4 ring-teal-100 transition-all"
+          />
+        </form>
       </div>
     </div>
     <script>
@@ -125,11 +154,7 @@
             // Actualizar la interfaz de usuario con los resultados
             var resultadosDiv = document.getElementById("productos");
 
-            var resultadosDivDos = document.getElementById("productosDos");
             resultadosDiv.innerHTML = generarHTMLResultados(
-              JSON.parse(xhr.responseText)
-            );
-            resultadosDivDos.innerHTML = generarHTMLResultados(
               JSON.parse(xhr.responseText)
             );
           }
@@ -140,7 +165,7 @@
       function AddProduct() {
         // Realizar solicitud AJAX
         var xhr = new XMLHttpRequest();
-        xhr.open("GET", "/products", true);
+        xhr.open("POST", "/addProduct", true);
         xhr.onreadystatechange = function () {
           if (xhr.readyState == 4 && xhr.status == 200) {
             // Actualizar la interfaz de usuario con los resultados

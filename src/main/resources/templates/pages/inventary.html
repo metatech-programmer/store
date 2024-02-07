@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+  lang="es"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" th:href="@{/css/output.css}" />
+    <title>Inventario</title>
+  </head>
+  <body class="bg-blue-900 relative text-zinc-900">
+    <div th:replace="~{layout/layout :: logout}"></div>
+    <nav th:replace="~{layout/layout :: navigation}"></nav>
+    <hr class="w-4/5 opacity-40 rounded-lg m-auto my-5" />
+  </body>
+</html>
