@@ -97,14 +97,18 @@
         id="venta"
         class="bg-sky-700 h-auto w-1/2 md:w-full p-3 flex flex-col gap-3 rounded-l-lg overflow-y-scroll border-2 shadow-md shadow-sky-200"
       >
-        <div
-          class="flex w-full justify-center p-3 border rounded-lg"
-          th:each="producto : ${productos}"
-        >
-          <span
-            th:value="${producto.idProducto}"
-            th:text="${producto.nombreProducto + ' - ' + producto.precioProducto}"
-          ></span>
+        <div class="flex w-full justify-center p-3 border rounded-lg">
+          <table class="w-full">
+            <thead class="text-center border rounded-lg">
+              <tr>
+                <th class="p-2 rounded-lg">Código</th>
+                <th class="p-2 rounded-lg">Nombre</th>
+                <th class="p-2 rounded-lg">Precio</th>
+                <th class="p-2 rounded-lg">Cantidad</th>
+              </tr>
+            </thead>
+            <tbody id="tableContainer"></tbody>
+          </table>
         </div>
       </div>
       <div
@@ -126,63 +130,102 @@
             name="totalVenta"
             id="totalVenta"
             class="w-full h-3/4 border p-2 rounded-lg text-center text-orange-400 font-bold text-7xl"
-            value="34332"
+            value="0"
             readonly
           />
           <input
             type="submit"
             value="Vender"
+
             class="w-full border p-2 rounded-lg mt-3 hover:bg-teal-400 bg-teal-400/50 hover:font-bold active:bg-teal-600 hover:border-none hover:ring-4 ring-teal-100 transition-all"
           />
         </form>
       </div>
     </div>
     <script>
+      let listaProducts = [];
+      const $select = document.querySelector("select");
       function handleKeyPress(event) {
         // Evitar el envío del formulario cuando se presiona Enter
         if (event.key === "Enter") {
           event.preventDefault();
         }
       }
-      function buscarProducto(keyword) {
-        var keyword = document.getElementById("searchInput").value;
-        // Realizar solicitud AJAX
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", "/search?search=" + keyword, true);
-        xhr.onreadystatechange = function () {
-          if (xhr.readyState == 4 && xhr.status == 200) {
-            // Actualizar la interfaz de usuario con los resultados
-            var resultadosDiv = document.getElementById("productos");
+      const searchInput = document.getElementById("searchInput");
+      const resultadosDiv = document.getElementById("productos");
 
-            resultadosDiv.innerHTML = generarHTMLResultados(
-              JSON.parse(xhr.responseText)
-            );
+      async function buscarProducto() {
+        const keyword = searchInput.value;
+        try {
+          const response = await fetch("/search?search=" + keyword);
+          if (!response.ok) {
+            throw new Error("Error en la solicitud AJAX: " + response.status);
           }
-        };
-        xhr.send();
+          const data = await response.json();
+          actualizarInterfazUsuario(data);
+        } catch (error) {
+          console.error(error);
+        }
       }
 
       function AddProduct() {
-        // Realizar solicitud AJAX
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "/addProduct", true);
-        xhr.onreadystatechange = function () {
-          if (xhr.readyState == 4 && xhr.status == 200) {
-            // Actualizar la interfaz de usuario con los resultados
-            var resultadosDiv = document.getElementById("productos");
-            resultadosDiv.innerHTML = generarHTMLResultados(
-              JSON.parse(xhr.responseText)
-            );
-            resultadosDivDos.innerHTML = generarHTMLResultados(
-              JSON.parse(xhr.responseText)
-            );
-          }
-        };
-        xhr.send();
+        const $select = document.querySelector("select");
+        let codigoProd = $select.value;
+        let nombreProd = $select.options[$select.selectedIndex].text
+          .split("-")[0]
+          .trim();
+        let precioProd = $select.options[$select.selectedIndex].text
+          .split("-")[1]
+          .trim();
+        let cantProd = document.getElementById("cantProducto").value;
+
+        listaProducts.push({
+          id: codigoProd,
+          name: nombreProd,
+          price: precioProd * cantProd,
+          cant: cantProd,
+        });
+
+        actualizarTabla();
+        actualizarPrecioTotal();
+      }
+
+      function actualizarPrecioTotal() {
+        let total = 0;
+        for (let i = 0; i < listaProducts.length; i++) {
+          total += listaProducts[i].price;
+        }
+        document.getElementById("totalVenta").value = total;
+      }
+
+      function actualizarTabla() {
+        const tableContainer = document.getElementById("tableContainer");
+
+        tableContainer.innerHTML = generarHTMLTabla();
+      }
+
+      function generarHTMLTabla() {
+        let html = "";
+
+        for (let i = 0; i < listaProducts.length; i++) {
+          html += `
+          
+          <tr class="text-center hover:bg-zinc-500 hover:text-zinc-200">
+            <td class="p-2 rounded-l-lg "> ${listaProducts[i].id}</td>
+            <td class="p-2 "> ${listaProducts[i].name}</td>   
+            <td class="p-2 "> ${listaProducts[i].price}</td> 
+            <td class="p-2 rounded-r-lg "> ${listaProducts[i].cant}</td>
+          </tr> 
+          `;
+        }
+        return html;
+      }
+
+      function actualizarInterfazUsuario(resultados) {
+        resultadosDiv.innerHTML = generarHTMLResultados(resultados);
       }
 
       function generarHTMLResultados(resultados) {
-        // Generar HTML para mostrar los resultados
         var html =
           resultados.length == 0
             ? "<option value='null' class='w-full p-2 rounded-lg hover:bg-zinc-500 hover:text-zinc-200' disabled>No se encontraron resultados</option><option value='null' class='w-full p-2 rounded-lg hover:bg-zinc-500 hover:text-zinc-200' disabled>Busque nuevamente</option>"
